@@ -50,7 +50,7 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
             this.metaData(ModelMetaData.Builder.create().parseJson(json.getJsonInterpreter("metadata")).build());
             this.defaultModel(ModelData.Builder.create().parseJson(json.getJsonInterpreter("default")).build());
             List<ModelData> ps = new ArrayList<>();
-            json.getJsonList("presets").forEach(preset ->{
+            json.getJsonList("presets").forEach(preset -> {
                 if (!preset.isNullOrEmpty()) {
                     ps.add(ModelData.Builder.create().parseJson(preset).build());
                 }

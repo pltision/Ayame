@@ -30,7 +30,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderHandEvent;
 import org.ayamemc.ayame.Ayame;
-import org.ayamemc.ayame.client.event.RenderCustomHandEventHandler;
+import org.ayamemc.ayame.client.handler.EventHandler;
 
 
 @OnlyIn(Dist.CLIENT)
@@ -48,7 +48,7 @@ public class RenderCustomModelHandEventHandler {
         float equipProgress = event.getEquipProgress();
         ItemStack stack = event.getItemStack();
         event.setCanceled(true); // 取消渲染默认手臂
-        RenderCustomHandEventHandler.renderCustomHandEventHandler(
+        EventHandler.renderCustomHandEventHandler(
                 hand,
                 poseStack,
                 multiBufferSource,

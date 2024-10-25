@@ -79,7 +79,6 @@ processResources {
 }
 
 
-
 sourcesJar {
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources

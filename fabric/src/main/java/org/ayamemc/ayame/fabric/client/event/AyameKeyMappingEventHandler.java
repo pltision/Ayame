@@ -27,10 +27,10 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.KeyMapping;
 import org.ayamemc.ayame.client.AyameClient;
 import org.ayamemc.ayame.client.gui.screen.ModelSelectMenuScreen;
+import org.ayamemc.ayame.client.handler.EventHandler;
 import org.ayamemc.ayame.fabric.client.util.AyameTMSKeyMappings;
 import org.ayamemc.ayame.util.JavaUtil;
 import org.ayamemc.ayame.util.TranslatableName;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -91,7 +91,7 @@ public class AyameKeyMappingEventHandler {
      */
     public static void processKeyPressed() {
         while (AyameKeyMappingEventHandler.MODEL_SELECT_MENU.consumeClick()) {
-            AyameClient.openSelectMenuKeyPressed();
+            EventHandler.openSelectMenuKeyPressed();
         }
     }
 }

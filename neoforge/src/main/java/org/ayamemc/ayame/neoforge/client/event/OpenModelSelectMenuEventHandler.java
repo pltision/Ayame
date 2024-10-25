@@ -26,8 +26,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import org.ayamemc.ayame.Ayame;
-import org.ayamemc.ayame.client.AyameClient;
 import org.ayamemc.ayame.client.gui.screen.ModelSelectMenuScreen;
+import org.ayamemc.ayame.client.handler.EventHandler;
 
 
 /**
@@ -43,7 +43,7 @@ public class OpenModelSelectMenuEventHandler {
     @SubscribeEvent
     public static void onClientClick(ClientTickEvent.Post event) {
         while (RegisterKeyMappingEventHandler.MODEL_SELECT_MENU.get().consumeClick()) {
-            AyameClient.openSelectMenuKeyPressed();
+            EventHandler.openSelectMenuKeyPressed();
         }
     }
 }

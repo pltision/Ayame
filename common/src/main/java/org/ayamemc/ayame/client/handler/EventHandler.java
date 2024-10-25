@@ -18,14 +18,18 @@
  *     along with Ayame.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.ayamemc.ayame.client.event;
+package org.ayamemc.ayame.client.handler;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
+import org.ayamemc.ayame.client.gui.screen.ModelSelectMenuScreen;
 
-public class RenderCustomHandEventHandler {
+public class EventHandler {
+    final private static Minecraft minecraft = Minecraft.getInstance();
+
     public static void renderCustomHandEventHandler(
             InteractionHand hand,
             PoseStack poseStack,
@@ -37,7 +41,10 @@ public class RenderCustomHandEventHandler {
             float equipProgress,
             ItemStack stack
     ) {
-        //
 
+    }
+
+    public static void openSelectMenuKeyPressed() {
+        ModelSelectMenuScreen.openDefaultModelSelectMenu(minecraft.screen);
     }
 }

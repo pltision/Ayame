@@ -33,7 +33,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
-import org.ayamemc.ayame.client.event.RenderCustomHandEventHandler;
+import org.ayamemc.ayame.client.handler.EventHandler;
 import org.ayamemc.ayame.fabric.client.api.event.RenderArmCallback;
 import org.ayamemc.ayame.fabric.client.event.AyameKeyMappingEventHandler;
 import org.ayamemc.ayame.util.TaskManager;
@@ -94,7 +94,7 @@ public class AyameFabricClientEvents {
             ItemStack stack,
             LocalPlayer player
     ) {
-        RenderCustomHandEventHandler.renderCustomHandEventHandler(
+        EventHandler.renderCustomHandEventHandler(
                 hand,
                 poseStack,
                 multiBufferSource,
