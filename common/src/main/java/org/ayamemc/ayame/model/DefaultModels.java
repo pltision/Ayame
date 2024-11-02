@@ -18,27 +18,16 @@
  *     along with Ayame.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.ayamemc.ayame.client;
+package org.ayamemc.ayame.model;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import org.ayamemc.ayame.model.resource.IModelResource;
-import org.jetbrains.annotations.ApiStatus;
+import static org.ayamemc.ayame.util.ResourceLocationHelper.withAyameNamespace;
 
-import java.util.List;
-
-
-/**
- * 内部事件，实现见 {@code AyameClientEventsFabricImpl} 与 {@code AyameClientEventsNeoForgeImpl}
- */
-@ApiStatus.Internal
-@Environment(EnvType.CLIENT)
-public interface IAyameClientEvents {
-    void ModelResource_onResourceCreate(IModelResource modelResource);
-
-    void ModelResource_onListResource(List<IModelResource> modelResources, boolean sorted);
-
-    class Instance {
-        public static IAyameClientEvents INSTANCE;
-    }
+public class DefaultModels {
+    public static final String MODEL_PATH = "config/ayame/models/";
+    public static final AyameModelType DEFAULT_MODEL = DefaultAyameModelType.of(
+            withAyameNamespace("geo/ayame/default"),
+            withAyameNamespace("animations/ayame/default"),
+            withAyameNamespace("textures/ayame/default"),
+            withAyameNamespace("metadata/ayame/default")
+    );
 }

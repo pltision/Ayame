@@ -20,7 +20,8 @@
 
 package org.ayamemc.ayame.model.resource;
 
-import org.ayamemc.ayame.client.DefaultAyameModels;
+
+import org.ayamemc.ayame.model.DefaultModels;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +68,7 @@ public class ModelScanner {
      * 从默认目录扫描模型
      */
     public static void scanModel() {
-        scanModel(Path.of(DefaultAyameModels.MODEL_PATH));
+        scanModel(Path.of(DefaultModels.MODEL_PATH));
     }
 
 }

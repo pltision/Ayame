@@ -22,7 +22,7 @@ package org.ayamemc.ayame.neoforge.client.api.event;
 
 import net.neoforged.bus.api.Event;
 import org.ayamemc.ayame.client.api.ModelResourceAPI;
-import org.ayamemc.ayame.client.resource.IModelResource;
+import org.ayamemc.ayame.model.resource.IModelResource;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class ModelResourceEvents {
      * 参数：<br></br>
      * modelResource：模型资源
      *
-     * @see IModelResource#ModelResource(Map)
+     * @see IModelResource
      */
     public static class OnResourceCreate extends Event {
         private final IModelResource modelResource;

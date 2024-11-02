@@ -23,8 +23,8 @@ package org.ayamemc.ayame.fabric.client;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.ayamemc.ayame.client.IAyameClientEvents;
-import org.ayamemc.ayame.client.resource.IModelResource;
 import org.ayamemc.ayame.fabric.client.api.event.ModelResourceEvents;
+import org.ayamemc.ayame.model.resource.IModelResource;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.List;

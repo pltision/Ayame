@@ -24,7 +24,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.NeoForge;
 import org.ayamemc.ayame.client.IAyameClientEvents;
-import org.ayamemc.ayame.client.resource.IModelResource;
+import org.ayamemc.ayame.model.resource.IModelResource;
 import org.ayamemc.ayame.neoforge.client.api.event.ModelResourceEvents;
 import org.jetbrains.annotations.ApiStatus;
 

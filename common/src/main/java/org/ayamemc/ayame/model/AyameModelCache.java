@@ -21,7 +21,6 @@
 package org.ayamemc.ayame.model;
 
 import net.minecraft.world.entity.player.Player;
-import org.ayamemc.ayame.client.DefaultAyameModels;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -50,7 +49,7 @@ public class AyameModelCache {
      */
     @NotNull
     public static AyameModelType getPlayerModel(Player player) {
-        return playerModelCache.getOrDefault(player, DefaultAyameModels.DEFAULT_MODEL);
+        return playerModelCache.getOrDefault(player, DefaultModels.DEFAULT_MODEL);
     }
 
     public static boolean hasPlayerModel(Player player) {
