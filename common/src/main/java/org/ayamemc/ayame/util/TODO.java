@@ -18,21 +18,10 @@
  *     along with Ayame.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.ayamemc.ayame.client;
+package org.ayamemc.ayame.util;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import org.ayamemc.ayame.model.resource.ModelScanner;
-import org.ayamemc.ayame.util.ConfigUtil;
-
-@Environment(EnvType.CLIENT)
-public class AyameClient {
-    public static void init() {
-        DefaultAyameModels.init();
-        ConfigUtil.init();
-        // 扫描模型
-        ModelScanner.scanModel();
+public class TODO extends RuntimeException{
+    public TODO(String content){
+        super("Not implemented yet: "+content);
     }
-
-
 }

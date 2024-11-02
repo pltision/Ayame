@@ -22,7 +22,7 @@ package org.ayamemc.ayame.client.api;
 
 import org.ayamemc.ayame.client.IAyameClientEvents;
 import org.ayamemc.ayame.client.resource.IModelResource;
-import org.ayamemc.ayame.client.resource.ModelResourceCache;
+import org.ayamemc.ayame.model.resource.ModelResourceCache;
 
 import java.util.List;
 

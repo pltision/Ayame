@@ -163,13 +163,14 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
      * @param license     许可证
      * @param links       链接
      */
-    public record ModelMetaData(@NotNull String[] authors, @NotNull String name, @Nullable String description,
+    public record ModelMetaData(@NotNull String format,@NotNull String[] authors, @NotNull String name, @Nullable String description,
                                 @Nullable String license, @Nullable String[] links, @Nullable String[] tags,
                                 @NotNull String type, @NotNull String version, @Nullable String[] animations) {
 
 
         public JsonInterpreter conversion() {
             JsonInterpreter json = new JsonInterpreter("{}");
+            json.set("format", format);
             json.set("authors", authors);
             json.set("name", name);
             json.set("description", description);
@@ -183,6 +184,7 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
         }
 
         public static class Builder {
+            private String format = "simple";
             private String[] authors = new String[]{};
             private String name = "Unknown";
             private String description = "Unknown";
@@ -195,6 +197,10 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
 
             public static Builder create() {
                 return new Builder();
+            }
+            public Builder setFormat(String format) {
+                this.format = format;
+                return this;
             }
 
             public Builder setAuthors(String[] authors) {
@@ -244,6 +250,7 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
 
             public Builder parseJson(JsonInterpreter json) {
                 return this.setName(json.getString("name"))
+                        .setFormat(json.getString("format"))
                         .setType(type)
                         .setAuthors(json.getStringList("authors").toArray(new String[0]))
                         .setDescription(json.getString("description"))
@@ -258,7 +265,7 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
             }
 
             public ModelMetaData build() {
-                return new ModelMetaData(authors, name, description, license, links, tags, type, version, animations);
+                return new ModelMetaData(format,authors, name, description, license, links, tags, type, version, animations);
             }
         }
 

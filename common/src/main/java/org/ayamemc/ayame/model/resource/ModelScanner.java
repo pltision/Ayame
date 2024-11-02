@@ -18,7 +18,7 @@
  *     along with Ayame.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.ayamemc.ayame.client.resource;
+package org.ayamemc.ayame.model.resource;
 
 import org.ayamemc.ayame.client.DefaultAyameModels;
 
