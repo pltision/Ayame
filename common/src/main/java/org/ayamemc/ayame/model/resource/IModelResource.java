@@ -20,17 +20,25 @@
 
 package org.ayamemc.ayame.model.resource;
 
+import org.ayamemc.ayame.model.AyameModelType;
 import org.ayamemc.ayame.model.IndexData;
 import org.ayamemc.ayame.util.TODO;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.List;
 
 public interface IModelResource {
     // TODO 完成
     IndexData.ModelMetaData getMetaData();
 
-    public static IModelResource fromFile(File file){
+    List<IndexData.ModelData> getModels();
+
+    default IndexData.ModelData getDefault() {
+        return getModels().getFirst();
+    }
+
+    static IModelResource fromFile(File file){
         throw new TODO("create model from file");
     }
 }
