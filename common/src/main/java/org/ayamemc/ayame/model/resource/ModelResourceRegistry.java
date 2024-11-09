@@ -20,7 +20,7 @@
 
 package org.ayamemc.ayame.model.resource;
 
-import org.ayamemc.ayame.model.IndexData;
+import org.ayamemc.ayame.util.JsonInterpreter;
 import org.ayamemc.ayame.util.TODO;
 
 import java.util.HashMap;
@@ -58,7 +58,7 @@ public class ModelResourceRegistry{
      * @return 模型实例
      */
     public static IModelResource create(ModelFile modelFile){
-        return create(modelFile.getIndexData().metaData().format(), modelFile);
+        return create(modelFile.getFormat(), modelFile);
     }
 
     /**
@@ -76,7 +76,7 @@ public class ModelResourceRegistry{
      * @return 是否支持被读取
      */
     public static boolean contains(ModelFile modelFile){
-        return contains(modelFile.getIndexData().metaData().format());
+        return contains(modelFile.getFormat());
     }
 
     @FunctionalInterface
@@ -87,8 +87,12 @@ public class ModelResourceRegistry{
 
     public static class ModelFile{
         // TODO 这里起暂时的占位符作用，后面请修改它
-        public IndexData getIndexData(){
+        public JsonInterpreter getIndexJson(){
             throw new TODO("Model File");
+        }
+
+        public String getFormat(){
+            return getIndexJson().getString("format");
         }
     }
 }

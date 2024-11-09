@@ -15,17 +15,17 @@
       "vanilla-like"
     ]
   },
-  "default": {
-    "name": "默认",
-    "model": "models/def_model.json",
-    "animation": "animations/def_anim.json",
-    "texture": "textures/def_tex.json",
-    "arm": "animations/arm.json",
-    "controllers": [
-      "ayame:default"
-    ]
-  },
-  "presets": [
+  "models": [
+    {
+      "name": "默认",
+      "model": "models/def_model.json",
+      "animation": "animations/def_anim.json",
+      "texture": "textures/def_tex.json",
+      "arm": "animations/arm.json",
+      "controllers": [
+        "ayame:default"
+      ]
+    },
     {
       "name": "预设1",
       "model": "models/def_model.json",
@@ -36,29 +36,5 @@
         "ayame:default"
       ]
     }
-  ],
-  "注释（别管这么多啦，这是咱开发时用的）": {
-    "presets": [
-      {
-        "name": "预设1",
-        "model": "models/preset1_model.json",
-        "animation": "animations/preset1_anim.json",
-        "texture": "textures/preset1_tex.json",
-        "arm": "animations/arm.json",
-        "controllers": [
-          "ayame:default"
-        ]
-      },
-      {
-        "name": "预设2",
-        "model": "models/preset2_model.json",
-        "animation": "animations/preset2_anim.json",
-        "texture": "textures/preset2_tex.json",
-        "arm": "animations/arm.json",
-        "controllers": [
-          "ayame:default"
-        ]
-      }
-    ]
-  }
+  ]
 }
