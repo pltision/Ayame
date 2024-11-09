@@ -19,9 +19,14 @@
  */
 
 package org.ayamemc.ayame.util;
+import net.minecraft.server.packs.FilePackResources;
+import net.minecraft.server.packs.PathPackResources;
 import net.minecraft.server.packs.linkfs.LinkFileSystem;
+import net.minecraft.server.packs.repository.FolderRepositorySource;
+import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackDetector;
 import net.minecraft.world.level.validation.DirectoryValidator;
+import org.ayamemc.ayame.Ayame;
 import org.ayamemc.ayame.model.resource.ModelResourceRegistry;
 import org.jetbrains.annotations.Nullable;
 
@@ -41,14 +46,19 @@ public class ModelContent extends PackDetector<ModelResourceRegistry.ModelFile> 
         super(validator);
     }
 
-    @Override
-    protected @Nullable ModelResourceRegistry.ModelFile createZipPack(Path path) throws IOException {
-        return null;
+    @Nullable
+    protected ModelResourceRegistry.ModelFile createZipPack(Path path) {
+        FileSystem fileSystem = path.getFileSystem();
+        if (fileSystem != FileSystems.getDefault() && !(fileSystem instanceof LinkFileSystem)) {
+            Ayame.LOGGER.info("Can't open pack archive at {}", path);
+            return null;
+        } else {
+            return new FilePackResources.FileResourcesSupplier(path);
+        }
     }
 
-    @Override
-    protected @Nullable ModelResourceRegistry.ModelFile createDirectoryPack(Path path) throws IOException {
-        return null;
+    protected ModelResourceRegistry.ModelFile createDirectoryPack(Path path) {
+        return new PathPackResources.PathResourcesSupplier(path);
     }
 
 
