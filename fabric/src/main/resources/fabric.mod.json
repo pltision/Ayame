@@ -50,8 +50,8 @@
     "ayame-fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.15.11",
-    "minecraft": "~1.21",
+    "fabricloader": ">=0.16.9",
+    "minecraft": ">=1.21 <=1.21.1",
     "java": ">=21",
     "fabric-api": "*",
     "geckolib": ">=4.5.8"
