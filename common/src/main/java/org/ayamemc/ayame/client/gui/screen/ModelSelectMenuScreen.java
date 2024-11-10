@@ -31,6 +31,7 @@ import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.ayamemc.ayame.client.api.ModelResourceAPI;
@@ -40,6 +41,8 @@ import org.ayamemc.ayame.model.resource.IModelResource;
 import org.ayamemc.ayame.util.ConfigUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -56,10 +59,6 @@ import static org.ayamemc.ayame.util.ResourceLocationHelper.withAyameNamespace;
  *     <li>提供回调接口用于处理屏幕关闭或模型切换时的操作</li>
  * </ul>
  *
- * <p>
- * 在模型选择菜单关闭时，可通过 {@link CloseCallback} 进行关闭时的自定义处理；
- * 在模型切换时，可通过 {@link SwitchModelCallback} 进行切换时的自定义处理。
- * </p>
  *
  * @see AyameScreen
  */
@@ -70,8 +69,7 @@ public class ModelSelectMenuScreen extends AyameScreen {
     protected static final Path MODEL_DIR = Path.of("config/ayame/models/");
     public final List<IModelResource> modelResources;
     public @Nullable ModelType selectedModel = AyameModelCache.getPlayerModel(Minecraft.getInstance().player);
-    public @Nullable CloseCallback closeCallback;
-    public @Nullable SwitchModelCallback switchModelCallback;
+
 
     /**
      * 构造方法，允许设置是否单次跳过警告界面。
@@ -147,6 +145,8 @@ public class ModelSelectMenuScreen extends AyameScreen {
         listmodeButton.setTooltip(Tooltip.create(Component.translatable("ayame.button.listmode.tooltip")));
         addRenderableWidget(opendirButton);
         addRenderableWidget(listmodeButton);
+        InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics, leftPos + 26, topPos + 8, leftPos + 75, topPos + 78, 30, 0.0625F, mouseX, mouseY, this.minecraft.player);
+
     }
 
 
@@ -187,24 +187,6 @@ public class ModelSelectMenuScreen extends AyameScreen {
     @Override
     public void onClose() {
         super.onClose();
-        if (closeCallback != null) {
-            closeCallback.close(modelResources, selectedModel);
-        }
     }
 
-    /**
-     * 关闭回调函数的接口，允许在屏幕关闭时进行自定义处理。
-     */
-    @FunctionalInterface
-    public interface CloseCallback {
-        void close(List<IModelResource> modelResources, @Nullable ModelType selectedModel);
-    }
-
-    /**
-     * 模型切换回调函数的接口，允许在模型切换时进行自定义处理。
-     */
-    @FunctionalInterface
-    public interface SwitchModelCallback {
-        void switchModel(List<IModelResource> modelResources, @Nullable ModelType selectedModel);
-    }
 }

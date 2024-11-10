@@ -43,6 +43,8 @@ public abstract class AyameScreen extends Screen {
     public static final ResourceLocation MENU_TOP_LAYER_TEXTURE = withAyameNamespace("textures/gui/top_layer.png");
     protected static final int BACKGROUND_TEXTURE_WIDTH = 410;
     protected static final int BACKGROUND_TEXTURE_HEIGHT = 220;
+    protected int leftPos;
+    protected int topPos;
     protected static final int MINI_BUTTON_SIZE = 16;
     private static final int BUTTON_SIZE = 32;
     protected final boolean skipWarningOnce;
@@ -69,6 +71,8 @@ public abstract class AyameScreen extends Screen {
 
     @Override
     protected void init() {
+        leftPos = (this.width - BACKGROUND_TEXTURE_WIDTH) / 2;
+        topPos = (this.height - BACKGROUND_TEXTURE_HEIGHT) / 2;
         // 检查是否需要显示警告界面
         if (!ConfigUtil.SKIP_AYAME_WARNING && !skipWarningOnce) {
             this.minecraft.setScreen(new StatementScreen(null, lastScreen));
