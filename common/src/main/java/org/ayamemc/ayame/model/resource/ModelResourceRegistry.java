@@ -20,11 +20,14 @@
 
 package org.ayamemc.ayame.model.resource;
 
+import org.ayamemc.ayame.util.FileUtil;
 import org.ayamemc.ayame.util.JsonInterpreter;
 import org.ayamemc.ayame.util.TODO;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.zip.ZipFile;
 
 /**
  * 模型格式的注册表
@@ -79,16 +82,24 @@ public class ModelResourceRegistry{
         return contains(modelFile.getFormat());
     }
 
+    @ApiStatus.Internal
+    public static void init() {
+        // 注册默认的模型格式
+        register("SIMPLE", SimpleModelResource::new);
+    }
+
     @FunctionalInterface
     public interface ResourceFactory {
-        // TODO: 此处传入一个已经加载后的文件的实例，和之前的ZipManager类似
         IModelResource create(ModelFile modelFile);
     }
 
     public static class ModelFile{
-        // TODO 这里起暂时的占位符作用，后面请修改它
+        private final ZipFile zipFile;
+        public ModelFile(ZipFile zipFile){
+            this.zipFile = zipFile;
+        }
         public JsonInterpreter getIndexJson(){
-            throw new TODO("Model File");
+            return JsonInterpreter.of(FileUtil.getInputStreamFromZip(zipFile, "index.json"));
         }
 
         public String getFormat(){

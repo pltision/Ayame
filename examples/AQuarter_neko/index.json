@@ -1,4 +1,5 @@
 {
+  "format": "SIMPLE",
   "name": "AQuarter_neko",
   "authors": [
     "CrystalNeko"
@@ -10,8 +11,5 @@
   ],
   "tags": [
     "vanilla-like"
-  ],
-  "animations": [
-  ],
-  "version": "0.0.1"
+  ]
 }

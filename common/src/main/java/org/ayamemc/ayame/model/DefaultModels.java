@@ -20,6 +20,13 @@
 
 package org.ayamemc.ayame.model;
 
+import org.ayamemc.ayame.model.resource.IModelResource;
+import org.ayamemc.ayame.model.resource.ModelContent;
+import org.ayamemc.ayame.model.resource.ModelResourceRegistry;
+import org.ayamemc.ayame.util.FileUtil;
+
+import java.nio.file.Path;
+
 import static org.ayamemc.ayame.util.ResourceLocationHelper.withAyameNamespace;
 
 public class DefaultModels {
@@ -30,4 +37,15 @@ public class DefaultModels {
             withAyameNamespace("textures/ayame/default"),
             withAyameNamespace("metadata/ayame/default")
     );
+
+    public static final IModelResource AQUARTER_NEKO_RESOURCE = create("aquarter_neko");
+
+    // 静态初始化
+    public static void init(){}
+
+    private static IModelResource create(String name) {
+        Path targetPath = Path.of(MODEL_PATH + name + ".zip");
+        FileUtil.copyResource("assets/ayame/models/"+name+".zip", targetPath);
+        return ModelResourceRegistry.create(ModelContent.create().createZipPack(targetPath));
+    }
 }

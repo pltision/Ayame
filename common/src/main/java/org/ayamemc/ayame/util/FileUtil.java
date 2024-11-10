@@ -28,6 +28,8 @@ import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import static org.ayamemc.ayame.Ayame.LOGGER;
 
@@ -166,6 +168,36 @@ public class FileUtil {
             }
         } catch (IOException e) {
             LOGGER.error("Cannot copy resource: ", e);
+        }
+    }
+
+    /**
+     * 从 ZipFile 中获取指定文件的 InputStream。
+     *
+     * @param zipFile  ZipFile 对象
+     * @param entryName 要读取的文件名
+     * @return 指定文件的 InputStream，如果文件不存在则返回 null
+     */
+    public static InputStream getInputStreamFromZip(ZipFile zipFile, String entryName) {
+        if (zipFile == null || entryName == null || entryName.isEmpty()) {
+            return null;
+        }
+
+        // 获取指定文件的 ZipEntry 对象
+        ZipEntry zipEntry = zipFile.getEntry(entryName);
+
+        if (zipEntry == null) {
+            // 文件不存在
+            return null;
+        }
+
+        try {
+            // 返回文件的 InputStream
+            return zipFile.getInputStream(zipEntry);
+        } catch (Exception e) {
+            // 处理异常，例如文件读取失败
+            LOGGER.error("Error reading file from ZipFile: ", e);
+            return null;
         }
     }
 
