@@ -165,7 +165,7 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
      */
     public record ModelMetaData(@NotNull String format,@NotNull String[] authors, @NotNull String name, @Nullable String description,
                                 @Nullable String license, @Nullable String[] links, @Nullable String[] tags,
-                                @NotNull String type, @NotNull String version, @Nullable String[] animations) {
+                               @NotNull String version, @Nullable String[] animations) {
 
 
         public JsonInterpreter conversion() {
@@ -177,7 +177,6 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
             json.set("license", license);
             json.set("links", links);
             json.set("tags", tags);
-            json.set("type", type);
             json.set("version", version);
             json.set("animations", animations);
             return json;
@@ -191,7 +190,6 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
             private String license = "Unknown";
             private String[] links = new String[]{};
             private String[] tags = new String[]{};
-            private String type = "ayame";
             private String version = "1.0.0";
             private String[] animations = new String[]{};
 
@@ -233,10 +231,6 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
                 return this;
             }
 
-            public Builder setType(String type) {
-                this.type = type;
-                return this;
-            }
 
             public Builder setVersion(String version) {
                 this.version = version;
@@ -251,7 +245,6 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
             public Builder parseJson(JsonInterpreter json) {
                 return this.setName(json.getString("name"))
                         .setFormat(json.getString("format"))
-                        .setType(type)
                         .setAuthors(json.getStringList("authors").toArray(new String[0]))
                         .setDescription(json.getString("description"))
                         .setLinks(json.getStringList("links").toArray(new String[0]))
@@ -265,7 +258,7 @@ public record IndexData(ModelMetaData metaData, ModelData defaultModel, ModelDat
             }
 
             public ModelMetaData build() {
-                return new ModelMetaData(format,authors, name, description, license, links, tags, type, version, animations);
+                return new ModelMetaData(format,authors, name, description, license, links, tags, version, animations);
             }
         }
 

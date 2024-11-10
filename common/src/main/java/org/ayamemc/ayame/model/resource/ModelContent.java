@@ -41,13 +41,15 @@ public class ModelContent extends PackDetector<ModelResourceRegistry.ModelFile> 
     @Nullable
     @Override
     public ModelResourceRegistry.ModelFile createZipPack(Path path) {
-        try (ZipFile zipFile = new ZipFile(path.toFile())) {
-            ZipEntry entry = zipFile.getEntry("index.json");
-            if (entry != null) {
-                return new ModelResourceRegistry.ModelFile(zipFile);
-            }
+        ZipFile zipFile = null;
+        try {
+            zipFile = new ZipFile(path.toFile());
         } catch (IOException e) {
-            Ayame.LOGGER.error("Failed to read ZIP pack at path: {}", path, e);
+            throw new RuntimeException(e);
+        }
+        ZipEntry entry = zipFile.getEntry("index.json");
+        if (entry != null) {
+            return new ModelResourceRegistry.ModelFile(zipFile);
         }
         return null;
     }

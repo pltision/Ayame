@@ -26,19 +26,26 @@ import org.ayamemc.ayame.model.resource.ModelResourceRegistry;
 import org.ayamemc.ayame.util.FileUtil;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import static org.ayamemc.ayame.util.ResourceLocationHelper.withAyameNamespace;
 
 public class DefaultModels {
     public static final String MODEL_PATH = "config/ayame/models/";
-    public static final AyameModelType DEFAULT_MODEL = DefaultAyameModelType.of(
-            withAyameNamespace("geo/ayame/default"),
-            withAyameNamespace("animations/ayame/default"),
-            withAyameNamespace("textures/ayame/default"),
-            withAyameNamespace("metadata/ayame/default")
-    );
+    public static final AyameModelType DEFAULT_MODEL = DefaultAyameModelType.Builder.create()
+            .setGeoModel(withAyameNamespace("geo/ayame/default"))
+            .setAnimation(withAyameNamespace("animations/ayame/default"))
+            .setTexture(withAyameNamespace("textures/ayame/default"))
+            .setMetaData(IndexData.ModelMetaData.Builder.create()
+                    .setName("default")
+                    .setAuthors(new String[]{"CrystalNeko"})
+                    .setDescription("Default model for Ayame")
+                    .setVersion("0.0.1")
+                    .build()
+            )
+            .build();
 
-    public static final IModelResource AQUARTER_NEKO_RESOURCE = create("aquarter_neko");
+    public static final IModelResource AQUARTER_NEKO_RESOURCE = create("AQuarter_neko");
 
     // 静态初始化
     public static void init(){}

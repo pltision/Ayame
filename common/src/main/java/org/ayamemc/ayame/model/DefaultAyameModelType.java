@@ -35,9 +35,6 @@ import net.minecraft.resources.ResourceLocation;
 public record DefaultAyameModelType(ResourceLocation geoModel, ResourceLocation animation, ResourceLocation texture,
                                     IndexData.ModelMetaData metaData) implements AyameModelType {
 
-    public static AyameModelType of(ResourceLocation geoModel, ResourceLocation animation, ResourceLocation texture, ResourceLocation metaData) {
-        return new DefaultAyameModelType(geoModel, animation, texture, IndexData.ModelMetaData.Builder.create().parseJsonFromResource(metaData).build());
-    }
 
     @Override
     public ResourceLocation getGeoModel() {
