@@ -49,7 +49,7 @@ import static org.ayamemc.ayame.util.ResourceLocationHelper.withAyameNamespace;
 /**
  * {@code ModelSelectMenuScreen} 负责处理 Ayame 模型的选择界面。
  * <p>
- * 该类继承自 {@link AyameMainScreen}，主要功能是：
+ * 该类继承自 {@link AyameScreen}，主要功能是：
  * <ul>
  *     <li>显示可供选择的模型列表</li>
  *     <li>处理模型选择的逻辑</li>
@@ -61,14 +61,13 @@ import static org.ayamemc.ayame.util.ResourceLocationHelper.withAyameNamespace;
  * 在模型切换时，可通过 {@link SwitchModelCallback} 进行切换时的自定义处理。
  * </p>
  *
- * @see AyameMainScreen
+ * @see AyameScreen
  */
 @Environment(EnvType.CLIENT)
-public class ModelSelectMenuScreen extends AyameMainScreen {
-    public final static int searchBarWidth = 112;
-    public final static int searchBarHeight = 23;
+public class ModelSelectMenuScreen extends AyameScreen {
+    public static final int searchBarWidth = 112;
+    public static final int searchBarHeight = 23;
     protected static final Path MODEL_DIR = Path.of("config/ayame/models/");
-    public final boolean skipWarningOnce;
     public final List<IModelResource> modelResources;
     public @Nullable ModelType selectedModel = AyameModelCache.getPlayerModel(Minecraft.getInstance().player);
     public @Nullable CloseCallback closeCallback;
@@ -81,64 +80,20 @@ public class ModelSelectMenuScreen extends AyameMainScreen {
      * @param skipWarningOnce 是否跳过一次警告界面
      */
     public ModelSelectMenuScreen(@Nullable Screen lastScreen, boolean skipWarningOnce) {
-        super(lastScreen);
-        this.skipWarningOnce = skipWarningOnce;
+        super(lastScreen, skipWarningOnce);
+        this.modelResources = ModelResourceAPI.listModels(true);
+    }
+    public ModelSelectMenuScreen(@Nullable Screen lastScreen) {
+        super(lastScreen, false);
         this.modelResources = ModelResourceAPI.listModels(true);
     }
 
-    /**
-     * 带有回调函数的构造方法。
-     * <p>
-     * 该方法允许为屏幕关闭和模型切换设置回调函数。
-     *
-     * @param lastScreen          上一个屏幕
-     * @param skipWarningOnce     是否跳过一次警告界面
-     * @param closeCallback       屏幕关闭时执行的回调
-     * @param switchModelCallback 模型切换时执行的回调
-     */
-    public ModelSelectMenuScreen(@Nullable Screen lastScreen, boolean skipWarningOnce, @Nullable CloseCallback closeCallback, @Nullable SwitchModelCallback switchModelCallback) {
-        this(lastScreen, skipWarningOnce);
-        this.closeCallback = closeCallback;
-        this.switchModelCallback = switchModelCallback;
-    }
 
-    /**
-     * 默认构造方法，不跳过警告界面。
-     *
-     * @param lastScreen 上一个屏幕
-     */
-    public ModelSelectMenuScreen(@Nullable Screen lastScreen) {
-        this(lastScreen, false);
-    }
-
-    /**
-     * 打开模型选择菜单并在选择后切换模型
-     *
-     * @param lastScreen 上一个屏幕
-     */
-    public static void openDefaultModelSelectMenu(Screen lastScreen) {
-        ModelSelectMenuScreen screen = new ModelSelectMenuScreen(lastScreen, false, (modelResources, selectedModel) -> {
-            // close的callback,也许以后用的上
-        }, (modelResources, selectedModel) -> {
-            if (selectedModel != null) {
-                AyameModelCache.setPlayerModel(Minecraft.getInstance().player, selectedModel);
-            }
-        });
-        Minecraft.getInstance().setScreen(screen);
-    }
-
-    /**
-     * 屏幕初始化方法，负责初始化模型选择界面。
-     * <p>
-     * 如果未设置跳过警告，则会先显示警告屏幕。
-     */
     @Override
     protected void init() {
-        if (!ConfigUtil.SKIP_AYAME_WARNING && !skipWarningOnce) {
-            this.minecraft.setScreen(new StatementScreen(this, lastScreen));
-            return;
-        }
-        super.init(); // 调用父类的初始化方法，加载通用的背景和组件
+        super.init();  // 继承父类的初始化方法，包括警告检查逻辑
+
+        // 搜索框组件初始化
         EditBox searchBox = new EditBox(
                 this.font,
                 getAlignedX(BACKGROUND_TEXTURE_WIDTH, searchBarWidth, 0, Alignment.CENTER) + 27,

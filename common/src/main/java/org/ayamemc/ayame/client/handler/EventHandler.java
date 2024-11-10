@@ -45,6 +45,6 @@ public class EventHandler {
     }
 
     public static void openSelectMenuKeyPressed() {
-        ModelSelectMenuScreen.openDefaultModelSelectMenu(minecraft.screen);
+        minecraft.setScreen(new ModelSelectMenuScreen(null));
     }
 }

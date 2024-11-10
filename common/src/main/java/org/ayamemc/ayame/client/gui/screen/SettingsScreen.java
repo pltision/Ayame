@@ -28,10 +28,20 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
-public class SettingsScreen extends AyameMainScreen {
-    public SettingsScreen(@Nullable Screen lastScreen) {
-        super(lastScreen);
+public class SettingsScreen extends AyameScreen {
+    /**
+     * 构造方法，允许设置是否单次跳过警告界面。
+     *
+     * @param lastScreen      上一个屏幕
+     * @param skipWarningOnce 是否跳过一次警告界面
+     */
+    public SettingsScreen(@Nullable Screen lastScreen, boolean skipWarningOnce) {
+        super(lastScreen, skipWarningOnce);
     }
+    public SettingsScreen(@Nullable Screen lastScreen) {
+        super(lastScreen, false);
+    }
+
 
 
     @Override

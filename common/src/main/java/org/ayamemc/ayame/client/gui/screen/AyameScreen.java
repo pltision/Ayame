@@ -30,13 +30,14 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.ayamemc.ayame.client.gui.widget.BlurWidget;
+import org.ayamemc.ayame.util.ConfigUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static org.ayamemc.ayame.util.ResourceLocationHelper.withAyameNamespace;
 
 @Environment(EnvType.CLIENT)
-public abstract class AyameMainScreen extends Screen {
+public abstract class AyameScreen extends Screen {
     public static final ResourceLocation MENU_BACKGROUND_TEXTURE = withAyameNamespace("textures/gui/background.png");
     public static final ResourceLocation MENU_BACKGROUND_OUTLINE_TEXTURE = withAyameNamespace("textures/gui/background_outline.png");
     public static final ResourceLocation MENU_TOP_LAYER_TEXTURE = withAyameNamespace("textures/gui/top_layer.png");
@@ -44,15 +45,37 @@ public abstract class AyameMainScreen extends Screen {
     protected static final int BACKGROUND_TEXTURE_HEIGHT = 220;
     protected static final int MINI_BUTTON_SIZE = 16;
     private static final int BUTTON_SIZE = 32;
+    protected final boolean skipWarningOnce;
     protected Screen lastScreen;
 
-    public AyameMainScreen(@Nullable Screen lastScreen) {
+    /**
+     * 构造方法，允许设置是否单次跳过警告界面。
+     *
+     * @param lastScreen      上一个屏幕
+     * @param skipWarningOnce 是否跳过一次警告界面
+     */
+    public AyameScreen(@Nullable Screen lastScreen, boolean skipWarningOnce) {
         super(Component.empty());
         this.lastScreen = lastScreen;
+        this.skipWarningOnce = skipWarningOnce;
     }
+
+    public AyameScreen(@Nullable Screen lastScreen) {
+        super(Component.empty());
+        this.lastScreen = lastScreen;
+        this.skipWarningOnce = false;
+    }
+
 
     @Override
     protected void init() {
+        // 检查是否需要显示警告界面
+        if (!ConfigUtil.SKIP_AYAME_WARNING && !skipWarningOnce) {
+            this.minecraft.setScreen(new StatementScreen(null, lastScreen));
+            return;
+        }
+
+        // 显示模糊背景
         BlurWidget blurredBackgroundWidget = new BlurWidget(getCenteredX(BACKGROUND_TEXTURE_WIDTH), getCenteredY(BACKGROUND_TEXTURE_HEIGHT), BACKGROUND_TEXTURE_WIDTH, BACKGROUND_TEXTURE_HEIGHT);
         this.addRenderableOnly(blurredBackgroundWidget);
     }
@@ -94,7 +117,7 @@ public abstract class AyameMainScreen extends Screen {
                 BUTTON_SIZE,
                 settingSprites,
                 button -> {
-                    minecraft.setScreen(new SettingsScreen(this));
+                    minecraft.setScreen(new SettingsScreen(this,true));
                 },
                 Component.translatable("ayame.screen.warningscreen.settingsscreen.title")
         );
