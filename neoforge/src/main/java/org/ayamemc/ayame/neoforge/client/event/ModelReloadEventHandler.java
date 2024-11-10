@@ -18,44 +18,27 @@
  *     along with Ayame.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package org.ayamemc.ayame.fabric.client.event;
+package org.ayamemc.ayame.neoforge.client.event;
 
-import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
-import net.fabricmc.fabric.api.resource.ResourceReloadListenerKeys;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.neoforged.neoforge.resource.ContextAwareReloadListener;
 import org.ayamemc.ayame.client.api.PlayerModelAPI;
 import org.ayamemc.ayame.client.util.ModelResourceWriterUtil;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
-import static org.ayamemc.ayame.util.ResourceLocationHelper.withAyameNamespace;
-
-public class ResourceManagerEventHandler implements IdentifiableResourceReloadListener {
-
-
+public class ModelReloadEventHandler extends ContextAwareReloadListener {
     @Override
-    public ResourceLocation getFabricId() {
-        return withAyameNamespace("model_reload");
-    }
-
-    @Override
-    public @NotNull CompletableFuture<Void> reload(PreparationBarrier preparationBarrier, ResourceManager resourceManager, ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
+    public CompletableFuture<Void> reload(PreparationBarrier preparationBarrier, ResourceManager resourceManager, ProfilerFiller preparationsProfiler, ProfilerFiller reloadProfiler, Executor backgroundExecutor, Executor gameExecutor) {
         CompletableFuture<Void> modelReloadTask = CompletableFuture.runAsync(() -> {
-            System.out.println("开始刷新模型资源...");
             PlayerModelAPI.getCache().forEach((player, cacheEntry) -> {
                 ModelResourceWriterUtil.addModelResource(cacheEntry);
             });
-            System.out.println("模型资源刷新完成。");
         }, gameExecutor);
 
         // 使用 preparationBarrier 来确保准备阶段结束后再进入应用阶段
         return modelReloadTask.thenCompose(preparationBarrier::wait);
     }
-
-
 }

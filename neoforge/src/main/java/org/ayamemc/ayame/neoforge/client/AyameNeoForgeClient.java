@@ -41,6 +41,7 @@ public class AyameNeoForgeClient {
                 IConfigScreenFactory.class,
                 () -> (modContainer, lastScreen) -> new SettingsScreen(lastScreen)
         );
+
     }
 
 
