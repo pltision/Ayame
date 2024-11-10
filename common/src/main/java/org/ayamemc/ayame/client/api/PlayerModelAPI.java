@@ -23,7 +23,14 @@ package org.ayamemc.ayame.client.api;
 import net.minecraft.world.entity.player.Player;
 import org.ayamemc.ayame.client.renderer.GeoPlayerRender;
 import org.ayamemc.ayame.model.AyameModelCache;
+import org.ayamemc.ayame.model.IndexData;
 import org.ayamemc.ayame.model.ModelType;
+import org.ayamemc.ayame.util.FileUtil;
+import org.ayamemc.ayame.util.JsonInterpreter;
+
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerModelAPI {
     /**
@@ -34,6 +41,7 @@ public class PlayerModelAPI {
      */
     public static void switchModel(Player player, ModelType model) {
         GeoPlayerRender.GeoPlayerModel.switchModel(player, model);
+        cacheModel(player, model);
     }
 
     /**
@@ -44,5 +52,21 @@ public class PlayerModelAPI {
      */
     public static void switchModelOnClient(Player player, ModelType model) {
         AyameModelCache.setPlayerModel(player, model);
+        cacheModel(player, model);
     }
+
+    private static void cacheModel(Player player, ModelType model) {
+        var entry = new CacheEntry(
+                model,
+                JsonInterpreter.of(FileUtil.getResourceAsStream("assets/ayame/"+model.getGeoModel().getPath())),
+                JsonInterpreter.of(FileUtil.getResourceAsStream("assets/ayame/"+model.getAnimation().getPath())),
+                FileUtil.getResourceAsStream("assets/ayame/"+model.getTexture().getPath())
+        );
+        cache.put(player, entry);
+    }
+    private static final Map<Player,CacheEntry> cache = new HashMap<>();
+    public static Map<Player,CacheEntry> getCache(){
+        return cache;
+    }
+    public record CacheEntry(ModelType model, JsonInterpreter modelJson, JsonInterpreter animJson, InputStream texture){}
 }

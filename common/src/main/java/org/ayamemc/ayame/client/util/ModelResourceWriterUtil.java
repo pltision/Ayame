@@ -28,8 +28,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import org.ayamemc.ayame.client.api.PlayerModelAPI;
 import org.ayamemc.ayame.model.DefaultModelType;
 import org.ayamemc.ayame.model.resource.IModelResource;
+import org.ayamemc.ayame.util.JsonInterpreter;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.cache.GeckoLibCache;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
@@ -40,6 +42,7 @@ import software.bernie.geckolib.loading.object.BakedModelFactory;
 import software.bernie.geckolib.loading.object.GeometryTree;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import static org.ayamemc.ayame.Ayame.MOD_ID;
 /**
@@ -101,5 +104,38 @@ public class ModelResourceWriterUtil {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void addBakedModel(ResourceLocation resourceLocation, JsonInterpreter json){
+        Map<ResourceLocation, BakedGeoModel> models = GeckoLibCache.getBakedModels();
+        if (models.containsKey(resourceLocation)) return;
+        Model m = KeyFramesAdapter.GEO_GSON.fromJson(json.toString(), Model.class);
+        BakedGeoModel bakedGeoModel = BakedModelFactory.getForNamespace(MOD_ID).constructGeoModel(GeometryTree.fromModel(m));
+        models.put(resourceLocation, bakedGeoModel);
+    }
+
+    public static void addBakedAnimation(ResourceLocation resourceLocation, JsonInterpreter json){
+        Map<ResourceLocation, BakedAnimations> animations = GeckoLibCache.getBakedAnimations();
+        if (animations.containsKey(resourceLocation)) return;
+        BakedAnimations ani = KeyFramesAdapter.GEO_GSON.fromJson(json.toString(), BakedAnimations.class);
+        animations.put(resourceLocation, ani);
+    }
+
+    public static void addTexture(ResourceLocation resourceLocation, InputStream inputStream){
+        try {
+            Minecraft.getInstance().getTextureManager().register(resourceLocation, new DynamicTexture(NativeImage.read(inputStream)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static DefaultModelType.Builder addModelResource(PlayerModelAPI.CacheEntry entry){
+        addBakedModel(entry.model().getGeoModel(), entry.modelJson());
+        addBakedAnimation(entry.model().getAnimation(), entry.animJson());
+        addTexture(entry.model().getTexture(), entry.texture());
+        return DefaultModelType.Builder.create()
+                .setGeoModel(entry.model().getGeoModel())
+                .setAnimation(entry.model().getAnimation())
+                .setTexture(entry.model().getTexture());
     }
 }

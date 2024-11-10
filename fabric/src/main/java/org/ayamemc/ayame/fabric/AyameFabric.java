@@ -21,8 +21,11 @@
 package org.ayamemc.ayame.fabric;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.server.packs.PackType;
 import org.ayamemc.ayame.Ayame;
 import org.ayamemc.ayame.client.IAyameClientEvents;
+import org.ayamemc.ayame.fabric.client.event.ResourceManagerEventHandler;
 import org.ayamemc.ayame.fabric.client.AyameClientEventsFabricImpl;
 
 /**
@@ -35,5 +38,6 @@ public final class AyameFabric implements ModInitializer {
     public void onInitialize() {
         Ayame.init();
         IAyameClientEvents.Instance.INSTANCE = new AyameClientEventsFabricImpl();
+        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new ResourceManagerEventHandler());
     }
 }
