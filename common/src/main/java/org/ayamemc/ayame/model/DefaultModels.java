@@ -26,16 +26,15 @@ import org.ayamemc.ayame.model.resource.ModelResourceRegistry;
 import org.ayamemc.ayame.util.FileUtil;
 
 import java.nio.file.Path;
-import java.util.List;
 
 import static org.ayamemc.ayame.util.ResourceLocationHelper.withAyameNamespace;
 
 public class DefaultModels {
     public static final String MODEL_PATH = "config/ayame/models/";
-    public static final AyameModelType DEFAULT_MODEL = DefaultAyameModelType.Builder.create()
-            .setGeoModel(withAyameNamespace("geo/ayame/default"))
-            .setAnimation(withAyameNamespace("animations/ayame/default"))
-            .setTexture(withAyameNamespace("textures/ayame/default"))
+    public static final ModelType DEFAULT_MODEL = DefaultModelType.Builder.create()
+            .setGeoModel(withAyameNamespace("geo/ayame/default.json"))
+            .setAnimation(withAyameNamespace("animations/ayame/default.json"))
+            .setTexture(withAyameNamespace("textures/ayame/default.png"))
             .setMetaData(IndexData.ModelMetaData.Builder.create()
                     .setName("default")
                     .setAuthors(new String[]{"CrystalNeko"})

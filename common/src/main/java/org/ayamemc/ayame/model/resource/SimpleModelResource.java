@@ -21,7 +21,9 @@
 package org.ayamemc.ayame.model.resource;
 
 import org.ayamemc.ayame.model.IndexData;
+import org.ayamemc.ayame.util.JsonInterpreter;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class SimpleModelResource implements IModelResource{
@@ -49,5 +51,20 @@ public class SimpleModelResource implements IModelResource{
                 .texture("texture.png")
                 .build()
         );
+    }
+
+    @Override
+    public JsonInterpreter getModelJson(IndexData.ModelData model) {
+        return JsonInterpreter.of(modelFile.getContent(model.model()));
+    }
+
+    @Override
+    public JsonInterpreter getAnimationJson(IndexData.ModelData model) {
+        return JsonInterpreter.of(modelFile.getContent(model.animation()));
+    }
+
+    @Override
+    public InputStream getTexture(IndexData.ModelData model) {
+        return modelFile.getContent(model.texture());
     }
 }

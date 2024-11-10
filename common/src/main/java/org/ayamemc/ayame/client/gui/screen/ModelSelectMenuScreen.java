@@ -35,7 +35,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.ayamemc.ayame.client.api.ModelResourceAPI;
 import org.ayamemc.ayame.model.AyameModelCache;
-import org.ayamemc.ayame.model.AyameModelType;
+import org.ayamemc.ayame.model.ModelType;
 import org.ayamemc.ayame.model.resource.IModelResource;
 import org.ayamemc.ayame.util.ConfigUtil;
 import org.jetbrains.annotations.NotNull;
@@ -70,7 +70,7 @@ public class ModelSelectMenuScreen extends AyameMainScreen {
     protected static final Path MODEL_DIR = Path.of("config/ayame/models/");
     public final boolean skipWarningOnce;
     public final List<IModelResource> modelResources;
-    public @Nullable AyameModelType selectedModel = AyameModelCache.getPlayerModel(Minecraft.getInstance().player);
+    public @Nullable ModelType selectedModel = AyameModelCache.getPlayerModel(Minecraft.getInstance().player);
     public @Nullable CloseCallback closeCallback;
     public @Nullable SwitchModelCallback switchModelCallback;
 
@@ -242,7 +242,7 @@ public class ModelSelectMenuScreen extends AyameMainScreen {
      */
     @FunctionalInterface
     public interface CloseCallback {
-        void close(List<IModelResource> modelResources, @Nullable AyameModelType selectedModel);
+        void close(List<IModelResource> modelResources, @Nullable ModelType selectedModel);
     }
 
     /**
@@ -250,6 +250,6 @@ public class ModelSelectMenuScreen extends AyameMainScreen {
      */
     @FunctionalInterface
     public interface SwitchModelCallback {
-        void switchModel(List<IModelResource> modelResources, @Nullable AyameModelType selectedModel);
+        void switchModel(List<IModelResource> modelResources, @Nullable ModelType selectedModel);
     }
 }

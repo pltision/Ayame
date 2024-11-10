@@ -31,9 +31,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class AyameModelCache {
     // 考虑到未来可能涩及多线程操作，所以使用 ConcurrentHashMap
-    public static Map<Player, AyameModelType> playerModelCache = new ConcurrentHashMap<>();
+    public static Map<Player, ModelType> playerModelCache = new ConcurrentHashMap<>();
 
-    public static void setPlayerModel(Player player, AyameModelType model) {
+    public static void setPlayerModel(Player player, ModelType model) {
         playerModelCache.put(player, model);
     }
 
@@ -48,7 +48,7 @@ public class AyameModelCache {
      * @return 玩家模型
      */
     @NotNull
-    public static AyameModelType getPlayerModel(Player player) {
+    public static ModelType getPlayerModel(Player player) {
         return playerModelCache.getOrDefault(player, DefaultModels.DEFAULT_MODEL);
     }
 

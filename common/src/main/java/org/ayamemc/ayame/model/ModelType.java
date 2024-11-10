@@ -26,7 +26,7 @@ import net.minecraft.resources.ResourceLocation;
 ///
 /// 模型类型指的是使用了哪种模型，例如ayame的模型类型为`ayame`，兼容ysm的为`ysm`，值与{@link ModelMetaData#type()}的值对应
 
-public interface AyameModelType {
+public interface ModelType {
     /**
      * 从geckolib缓存中获取模型资源
      *

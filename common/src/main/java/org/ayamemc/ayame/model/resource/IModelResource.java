@@ -20,22 +20,43 @@
 
 package org.ayamemc.ayame.model.resource;
 
-import org.ayamemc.ayame.model.AyameModelType;
+import net.minecraft.resources.ResourceLocation;
+import org.ayamemc.ayame.model.AyameModelCache;
+import org.ayamemc.ayame.model.DefaultModelType;
+import org.ayamemc.ayame.model.ModelType;
 import org.ayamemc.ayame.model.IndexData;
+import org.ayamemc.ayame.util.JsonInterpreter;
 import org.ayamemc.ayame.util.TODO;
 
 import java.io.File;
-import java.nio.file.Path;
+import java.io.InputStream;
 import java.util.List;
+import static org.ayamemc.ayame.util.ResourceLocationHelper.withAyameNamespace;
 
 public interface IModelResource {
     // TODO 完成
     IndexData.ModelMetaData getMetaData();
+    default String getName(){
+        return getMetaData().name();
+    }
 
     List<IndexData.ModelData> getModels();
 
+    JsonInterpreter getModelJson(IndexData.ModelData model);
+    JsonInterpreter getAnimationJson(IndexData.ModelData model);
+    InputStream getTexture(IndexData.ModelData model);
+
     default IndexData.ModelData getDefault() {
         return getModels().getFirst();
+    }
+    default ResourceLocation createModelResourceLocation(){
+        return withAyameNamespace("geo/" + getName() + ".json");
+    }
+    default ResourceLocation createAnimationResourceLocation(){
+        return withAyameNamespace("animations/" + getName() + ".json");
+    }
+    default ResourceLocation createTextureResourceLocation(){
+        return withAyameNamespace("textures/" + getName() + ".png");
     }
 
     static IModelResource fromFile(File file){

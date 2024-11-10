@@ -23,7 +23,7 @@ package org.ayamemc.ayame.client.api;
 import net.minecraft.world.entity.player.Player;
 import org.ayamemc.ayame.client.renderer.GeoPlayerRender;
 import org.ayamemc.ayame.model.AyameModelCache;
-import org.ayamemc.ayame.model.AyameModelType;
+import org.ayamemc.ayame.model.ModelType;
 
 public class PlayerModelAPI {
     /**
@@ -32,7 +32,7 @@ public class PlayerModelAPI {
      * @param player 玩家
      * @param model  模型
      */
-    public static void switchModel(Player player, AyameModelType model) {
+    public static void switchModel(Player player, ModelType model) {
         GeoPlayerRender.GeoPlayerModel.switchModel(player, model);
     }
 
@@ -42,7 +42,7 @@ public class PlayerModelAPI {
      * @param player 玩家
      * @param model  模型
      */
-    public static void switchModelOnClient(Player player, AyameModelType model) {
+    public static void switchModelOnClient(Player player, ModelType model) {
         AyameModelCache.setPlayerModel(player, model);
     }
 }

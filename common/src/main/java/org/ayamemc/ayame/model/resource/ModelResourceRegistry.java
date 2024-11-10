@@ -25,6 +25,7 @@ import org.ayamemc.ayame.util.JsonInterpreter;
 import org.ayamemc.ayame.util.TODO;
 import org.jetbrains.annotations.ApiStatus;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.ZipFile;
@@ -104,6 +105,10 @@ public class ModelResourceRegistry{
 
         public String getFormat(){
             return getIndexJson().getString("format");
+        }
+
+        public InputStream getContent(String path){
+            return FileUtil.getInputStreamFromZip(zipFile, path);
         }
     }
 }

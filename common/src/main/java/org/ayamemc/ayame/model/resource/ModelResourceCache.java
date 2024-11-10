@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * 客户端模型资源的缓存
+ * 模型资源的缓存
  */
 public class ModelResourceCache {
     /**

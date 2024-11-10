@@ -32,8 +32,8 @@ import net.minecraft.resources.ResourceLocation;
  * @param metaData  模型元数据
  */
 
-public record DefaultAyameModelType(ResourceLocation geoModel, ResourceLocation animation, ResourceLocation texture,
-                                    IndexData.ModelMetaData metaData) implements AyameModelType {
+public record DefaultModelType(ResourceLocation geoModel, ResourceLocation animation, ResourceLocation texture,
+                               IndexData.ModelMetaData metaData) implements ModelType {
 
 
     @Override
@@ -86,8 +86,8 @@ public record DefaultAyameModelType(ResourceLocation geoModel, ResourceLocation 
             return this;
         }
 
-        public DefaultAyameModelType build() {
-            return new DefaultAyameModelType(geoModel, animation, texture, metaData);
+        public DefaultModelType build() {
+            return new DefaultModelType(geoModel, animation, texture, metaData);
         }
     }
 }

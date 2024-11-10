@@ -30,7 +30,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import org.ayamemc.ayame.model.AyameModelCache;
-import org.ayamemc.ayame.model.AyameModelType;
+import org.ayamemc.ayame.model.ModelType;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.model.GeoModel;
@@ -71,9 +71,9 @@ public class GeoPlayerRender extends GeoEntityRenderer<Player> {
         /**
          * 将玩家模型切换为对应外观，TODO: 同时告诉服务器
          *
-         * @param model 传入{@link AyameModelType}类型的模型资源
+         * @param model 传入{@link ModelType}类型的模型资源
          */
-        public static void switchModel(Player player, AyameModelType model) {
+        public static void switchModel(Player player, ModelType model) {
             AyameModelCache.setPlayerModel(player, model);
         }
 
