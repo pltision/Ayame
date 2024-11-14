@@ -23,9 +23,11 @@ package org.ayamemc.ayame.client.handler;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import org.ayamemc.ayame.client.gui.screen.ModelSelectMenuScreen;
+import org.ayamemc.ayame.client.screen.ModelSelectScreen;
 
 public class EventHandler {
     final private static Minecraft minecraft = Minecraft.getInstance();
@@ -45,6 +47,6 @@ public class EventHandler {
     }
 
     public static void openSelectMenuKeyPressed() {
-        minecraft.setScreen(new ModelSelectMenuScreen(null));
+        minecraft.setScreen(new ModelSelectScreen(Component.empty()));
     }
 }
