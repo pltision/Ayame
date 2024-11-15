@@ -1,8 +1,8 @@
 package org.ayamemc.ayame.client.screen.constant;
 
 public class AyameScreenConfig implements Cloneable {
-    public int tabBarWidth=32;
-    public int titleBarHeight=20;
+    public int tabBarWidth=24;
+    public int titleBarHeight=17;
 
     public int ruleWidth=2;
 
@@ -11,6 +11,10 @@ public class AyameScreenConfig implements Cloneable {
     public int modelBlockPadding =6;
 
     public int viewPanelExpectWidth=100;
+
+    public int titleDx =4, titleDy =5;
+
+    public int expandTabsButtonHeight=titleBarHeight;
 
     @Override
     public AyameScreenConfig clone() {

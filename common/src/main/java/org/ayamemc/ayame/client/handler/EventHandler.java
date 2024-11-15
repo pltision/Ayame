@@ -22,12 +22,19 @@ package org.ayamemc.ayame.client.handler;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import org.ayamemc.ayame.client.gui.screen.ModelSelectMenuScreen;
-import org.ayamemc.ayame.client.screen.ModelSelectScreen;
+import org.ayamemc.ayame.client.screen.AbstractAyameScreen;
+import org.ayamemc.ayame.client.screen.constant.TabElement;
+
+import java.util.ArrayList;
+import java.util.function.Supplier;
 
 public class EventHandler {
     final private static Minecraft minecraft = Minecraft.getInstance();
@@ -47,6 +54,20 @@ public class EventHandler {
     }
 
     public static void openSelectMenuKeyPressed() {
-        minecraft.setScreen(new ModelSelectScreen(Component.empty()));
+        ArrayList<TabElement> elements=new ArrayList<>();
+        for(int i=0;i<5;i++){
+            final int num=i;
+            elements.add(
+                    new TabElement() {
+
+                        @SuppressWarnings("unchecked")
+                        @Override
+                        public <T extends GuiEventListener & Renderable & NarratableEntry> T createWidget(AbstractAyameScreen screen, int x, int y, int width, int height) {
+                            return (T) new Button(x,y,width,height,Component.literal(String.valueOf(num)),(b)->{}, Supplier::get){};
+                        }
+                    }
+            );
+        }
+        minecraft.setScreen(new AbstractAyameScreen(Component.translatable("测试屏幕"),elements));
     }
 }

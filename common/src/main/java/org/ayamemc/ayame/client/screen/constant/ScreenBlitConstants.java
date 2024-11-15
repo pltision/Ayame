@@ -30,7 +30,7 @@ public class ScreenBlitConstants {
     //标题栏
     public PlacePairs titleBar;
     //标题栏下面的分割线
-    public PlacePairs titleBarRule;
+//    public PlacePairs titleBarRule;
 
     //内容区
     public PlacePairs contentPanel;
@@ -60,9 +60,8 @@ public class ScreenBlitConstants {
         titleBar=new PlacePairs(widthSum,0,screenWidth-widthSum,config.titleBarHeight);
         heightSum+= titleBar.height;
 
-        //noinspection SuspiciousNameCombination
-        titleBarRule=new PlacePairs(widthSum,heightSum,screenWidth-widthSum,config.ruleWidth);
-        heightSum+= titleBarRule.height;
+//        titleBarRule=new PlacePairs(widthSum,heightSum,screenWidth-widthSum,config.ruleWidth);
+//        heightSum+= titleBarRule.height;
 
         contentPanelWithNoViewPanel=screenWidth-widthSum;
 
